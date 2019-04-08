@@ -7,13 +7,12 @@ export const followUser = userId => ({
       effect: {
         url: 'https://jsonplaceholder.typicode.com/users',
         method: 'POST',
-        body: { userId }
+        body: JSON.stringify({ userId })
       },
       // dispatched when effect succeeds
       commit: {
         type: 'FOLLOW_USER_COMMIT',
-        payload: null,
-        meta: { userId }
+        payload: { userId }
       },
       // dispatched if effect fails
       rollback: {
@@ -40,8 +39,7 @@ export const unfollowUser = userId => ({
       // dispatched when effect succeeds
       commit: {
         type: 'UNFOLLOW_USER_COMMIT',
-        payload: null,
-        meta: { userId }
+        payload: { userId },
       },
       // dispatched if effect fails
       rollback: {
