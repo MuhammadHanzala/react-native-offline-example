@@ -1,3 +1,11 @@
+export const goOffline = () => (
+  { type: 'Offline/STATUS_CHANGED', payload: { online: false } }
+);
+
+export const goOnline = () => (
+  { type: 'Offline/STATUS_CHANGED', payload: { online: true } }
+);
+
 export const followUser = userId => ({
   type: 'FOLLOW_USER_REQUEST',
   payload: { userId },
@@ -34,7 +42,7 @@ export const unfollowUser = userId => ({
       effect: {
         url: 'https://jsonplaceholder.typicode.com/users',
         method: 'POST',
-        body: { userId }
+        body: JSON.stringify({ userId })
       },
       // dispatched when effect succeeds
       commit: {

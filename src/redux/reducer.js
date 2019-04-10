@@ -3,7 +3,6 @@ const initialState = {
   users: {}
 };
 export default (state = initialState, action) => {
-  console.log('userland', action, state);
   switch (action.type) {
     case 'FOLLOW_USER_REQUEST':
       return {

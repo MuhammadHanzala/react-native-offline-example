@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { followUser, unfollowUser } from '../redux/actions';
+import { followUser, unfollowUser, goOffline, goOnline } from '../redux/actions';
 
 import OfflineQueue from './OfflineQueue';
 import Users from './Users';
@@ -13,8 +13,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  goOffline: () => dispatch({ type: 'Offline/STATUS_CHANGED', payload: { online: false } }),
-  goOnline: () => dispatch({ type: 'Offline/STATUS_CHANGED', payload: { online: true } }),
+  goOffline: () => dispatch(goOffline()),
+  goOnline: () => dispatch(goOnline()),
   followUser: id => dispatch(followUser(id)),
   unfollowUser: id => dispatch(unfollowUser(id))
 });
@@ -28,8 +28,18 @@ const Main = props => (
     />
     <OfflineQueue isOnline={props.isOnline} actions={props.outbox} />
     <View style={styles.buttons}>
-      <Button onPress={props.goOffline} title="Go offline" />
-      <Button onPress={props.goOnline} title="Go online" />
+      <TouchableOpacity
+        style={styles.onlineButton}
+        onPress={props.goOnline}
+      >
+        <Text style={styles.followText}>Go Online</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.offlineButton}
+        onPress={props.goOffline}
+      >
+        <Text style={styles.followText}>Go Offline</Text>
+      </TouchableOpacity>
     </View>
   </View>
 );
@@ -41,8 +51,20 @@ const styles = StyleSheet.create({
   },
   buttons: {
     justifyContent: 'space-around',
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+    padding: 10
+  },
+  onlineButton: {
+    backgroundColor: '#079e04',
+    padding: 10,
+    borderRadius: 20
+  },
+  offlineButton: {
+    backgroundColor: '#ff0532',
+    padding: 10,
+    borderRadius: 20
+  },
+  followText: { color: '#ffffff' },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
